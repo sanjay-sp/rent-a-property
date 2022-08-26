@@ -1,16 +1,19 @@
 import "./App.css";
-import Cards from "./components/Cards/Cards";
-import Filter from "./components/Filters/Filter/Filter";
-import SearchBar from "./components/Filters/SearchBar/SearchBar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import Favorites from "./components/Pages/Favorites";
+import Rent from "./components/Pages/Rent";
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <SearchBar />
-      <Filter />
-      <Cards />
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route exact path="/" element={<Rent />}></Route>
+          <Route exact path="/favorites" element={<Favorites />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
