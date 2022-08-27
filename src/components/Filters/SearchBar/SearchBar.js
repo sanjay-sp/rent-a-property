@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { searchProperty } from "../../../redux/property/propertySlice";
 import "./SearchBar.css";
 
 function SearchBar() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(searchProperty(searchTerm));
+    console.log("in useEffect");
+  }, [searchTerm]);
+
+  const searchTermHandler = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <div className="search-area">
       <div className="search-header">Search properties to rent</div>
@@ -9,6 +24,8 @@ function SearchBar() {
         className="searchbar"
         type="text"
         placeholder="Search with Search Bar"
+        value={searchTerm}
+        onChange={searchTermHandler}
       />
     </div>
   );

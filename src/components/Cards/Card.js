@@ -1,23 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  addFavorites,
+  removeFavorites,
+} from "../../redux/property/favoritesSlice";
 import "./Card.css";
 
-function Card() {
+function Card({ property }) {
+  const [isWishList, setisWishList] = useState(false);
+
+  const { image, name, address, price, area, bathrooms, beds } = property;
+
+  const dispatch = useDispatch();
+
+  const toggleWishList = () => {
+    setisWishList(!isWishList);
+    console.log(isWishList);
+  };
+
+  useEffect(() => {
+    if (isWishList) {
+      dispatch(addFavorites(property));
+    } else {
+      dispatch(removeFavorites(property));
+    }
+  }, [isWishList]);
+
   return (
     <div className="card-tile">
       <div className="prop-img">
-        <img src="https://assets.entrepreneur.com/content/3x2/2000/20150622231001-for-sale-real-estate-home-house.jpeg" />
+        <img src={image} />
       </div>
       <div className="prop-details">
-        <div className="prop-price">
-          $2500<span>/month</span>
+        <div className="row-1">
+          <div className="prop-price">
+            ${price}
+            <span>/month</span>
+          </div>
+          <button onClick={toggleWishList}>
+            {isWishList ? "Remove" : "Add"} to Wishlist
+          </button>
         </div>
-        <div className="prop-name">Palm Harbor</div>
-        <div className="prop-address">2699 Green Valley, Highland Lake, FL</div>
+        <div className="prop-name">{name}</div>
+        <div className="prop-address">{address}</div>
         <div className="prop-aminities">
-          <div className="beds">3 Beds</div>
-          <div className="baths">2 Bathrooms</div>
+          <div className="beds">{beds} Beds</div>
+          <div className="baths">{bathrooms} Bathrooms</div>
           <div className="area">
-            5 x 7 m<sup>2</sup>
+            {area} m<sup>2</sup>
           </div>
         </div>
       </div>

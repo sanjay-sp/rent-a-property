@@ -3,6 +3,12 @@
   --text-color: #646470;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+  text-align: center;
+}
+
 .navbar {
   display: flex;
   justify-content: space-around;

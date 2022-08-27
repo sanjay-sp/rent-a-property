@@ -1,46 +1,85 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { filterProperty } from "../../../redux/property/propertySlice";
+import { data } from "../../../data/data";
 import "./Filter.css";
 
 export default function Filter() {
+  const dispatch = useDispatch();
+
+  const getFilterContent = (type) => {
+    if (type == "location") {
+      return [...new Set(data.map(({ location }) => location))];
+    } else {
+      return [...new Set(data.map(({ type }) => type))];
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      filterProperty({
+        location: {
+          locationValue: e.target.location.value,
+          locationName: e.target.location.name,
+        },
+        type: {
+          typeValue: e.target.type.value,
+          typeName: e.target.type.name,
+        },
+      })
+    );
+  };
+
   return (
-    <div className="filter-list">
-      <div className="location-filter">
-        <label>Location</label>
-        <select name="location">
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="fiat">Fiat</option>
-          <option value="audi">Audi</option>
-        </select>
+    <form onSubmit={handleSubmit}>
+      <div className="filter-list">
+        <div className="location-filter">
+          <label>Location</label>
+          <select name="location">
+            {getFilterContent("location").map((location) => {
+              return (
+                <option key={location} value={location}>
+                  {location}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="date-filter">
+          <label>When</label>
+          <select name="date">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi">Audi</option>
+          </select>
+        </div>
+        <div className="price-filter">
+          <label>Price</label>
+          <select name="price">
+            <option value="<500">Less than $500</option>
+            <option value="500-1000">$500-$1000</option>
+            <option value="1000-1500">$1000-$1500</option>
+            <option value="1500-2000">$1500-$2000</option>
+            <option value="2000-2500">$2000-$2500</option>
+            <option value="2500">$2500+</option>
+          </select>
+        </div>
+        <div className="type-filter">
+          <label>Property Type</label>
+          <select name="type">
+            {getFilterContent("type").map((type) => {
+              return (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <button className="search-button">Search</button>
       </div>
-      <div className="date-filter">
-        <label>When</label>
-        <select name="location">
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="fiat">Fiat</option>
-          <option value="audi">Audi</option>
-        </select>
-      </div>
-      <div className="price-filter">
-        <label>Price</label>
-        <select name="location">
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="fiat">Fiat</option>
-          <option value="audi">Audi</option>
-        </select>
-      </div>
-      <div className="type-filter">
-        <label>Property Type</label>
-        <select name="location">
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="fiat">Fiat</option>
-          <option value="audi">Audi</option>
-        </select>
-      </div>
-      <button className="search-button">Search</button>
-    </div>
+    </form>
   );
 }
