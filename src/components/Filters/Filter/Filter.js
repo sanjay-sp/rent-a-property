@@ -5,6 +5,8 @@ import { data } from "../../../data/data";
 import "./Filter.css";
 
 export default function Filter() {
+  const date = new Date();
+  console.log(date);
   const dispatch = useDispatch();
 
   const getFilterContent = (type) => {
@@ -17,16 +19,13 @@ export default function Filter() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { location, type, price, date } = e.target;
     dispatch(
       filterProperty({
-        location: {
-          locationValue: e.target.location.value,
-          locationName: e.target.location.name,
-        },
-        type: {
-          typeValue: e.target.type.value,
-          typeName: e.target.type.name,
-        },
+        locationValue: location.value,
+        typeValue: type.value,
+        dateValue: date.value.toString(),
+        priceValue: price.value,
       })
     );
   };
@@ -37,6 +36,7 @@ export default function Filter() {
         <div className="location-filter">
           <label>Location</label>
           <select name="location">
+            <option value="Any Location">Any Location</option>
             {getFilterContent("location").map((location) => {
               return (
                 <option key={location} value={location}>
@@ -48,27 +48,24 @@ export default function Filter() {
         </div>
         <div className="date-filter">
           <label>When</label>
-          <select name="date">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="fiat">Fiat</option>
-            <option value="audi">Audi</option>
-          </select>
+          <input name="date" type="date" min="2022-08-28" className="date" />
         </div>
         <div className="price-filter">
           <label>Price</label>
           <select name="price">
+            <option value="Any Price">Any Price</option>
             <option value="<500">Less than $500</option>
-            <option value="500-1000">$500-$1000</option>
-            <option value="1000-1500">$1000-$1500</option>
-            <option value="1500-2000">$1500-$2000</option>
-            <option value="2000-2500">$2000-$2500</option>
-            <option value="2500">$2500+</option>
+            <option value="500-1000">$500 - $1000</option>
+            <option value="1000-1500">$1000 - $1500</option>
+            <option value="1500-2000">$1500 - $2000</option>
+            <option value="2000-2500">$2000 - $2500</option>
+            <option value="2500">$2500 +</option>
           </select>
         </div>
         <div className="type-filter">
           <label>Property Type</label>
           <select name="type">
+            <option value="Any Type">Any Type</option>
             {getFilterContent("type").map((type) => {
               return (
                 <option key={type} value={type}>

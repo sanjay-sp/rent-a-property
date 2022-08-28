@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addFavorites,
   removeFavorites,
 } from "../../redux/property/favoritesSlice";
+import { getAllFavorites } from "../../redux/property/favoritesSlice";
+import like from "../../public/like.png";
+import dislike from "../../public/dislike.png";
 import "./Card.css";
 
 function Card({ property }) {
-  const [isWishList, setisWishList] = useState(false);
+  const dispatch = useDispatch();
+  const favoritesList = useSelector(getAllFavorites);
 
   const { image, name, address, price, area, bathrooms, beds } = property;
 
-  const dispatch = useDispatch();
+  var isFavorite = favoritesList.includes(property);
 
   const toggleWishList = () => {
-    setisWishList(!isWishList);
-    console.log(isWishList);
-  };
-
-  useEffect(() => {
-    if (isWishList) {
-      dispatch(addFavorites(property));
-    } else {
+    if (isFavorite) {
       dispatch(removeFavorites(property));
+    } else {
+      dispatch(addFavorites(property));
     }
-  }, [isWishList]);
+  };
 
   return (
     <div className="card-tile">
@@ -37,9 +36,11 @@ function Card({ property }) {
             ${price}
             <span>/month</span>
           </div>
-          <button onClick={toggleWishList}>
-            {isWishList ? "Remove" : "Add"} to Wishlist
-          </button>
+          <img
+            className="favorite-button"
+            src={isFavorite ? like : dislike}
+            onClick={toggleWishList}
+          />
         </div>
         <div className="prop-name">{name}</div>
         <div className="prop-address">{address}</div>

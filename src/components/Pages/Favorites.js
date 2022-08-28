@@ -10,13 +10,15 @@ function Favorites() {
   return (
     <div className="favorites-page">
       <h3 className="favorites-header">Favorites</h3>
-      {favs.length > 0 ? (
-        favs.map((fav) => {
-          return <Card property={fav} />;
-        })
-      ) : (
-        <h3>No Favorites Added</h3>
-      )}
+      <div className="favorites-listing">
+        {favs.length > 0 ? (
+          favs.map((fav) => {
+            return <Card property={fav} />;
+          })
+        ) : (
+          <h3 className="not-found">No Favorites Added</h3>
+        )}
+      </div>
     </div>
   );
 }

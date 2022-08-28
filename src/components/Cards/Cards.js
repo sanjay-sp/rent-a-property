@@ -8,9 +8,13 @@ function Cards() {
   const properties = useSelector(getAllProperties);
   return (
     <div className="cards-list">
-      {properties.map((property) => {
-        return <Card key={property.address} property={property} />;
-      })}
+      {properties.length > 0 ? (
+        properties.map((property) => {
+          return <Card key={property.name} property={property} />;
+        })
+      ) : (
+        <h3 className="not-found">No Properties Found</h3>
+      )}
     </div>
   );
 }

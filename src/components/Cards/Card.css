@@ -22,6 +22,11 @@
   justify-content: space-between;
 }
 
+.favorite-button {
+  width: 3rem;
+  height: 3rem;
+}
+
 .prop-price {
   margin-top: 1rem;
   font-size: 1.3rem;

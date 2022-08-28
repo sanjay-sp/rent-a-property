@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { data } from "../../data/data";
 
 const initialState = {
@@ -26,28 +26,63 @@ const propertySlice = createSlice({
       }
     },
     filterProperty: (state, { payload }) => {
-      const { locationValue, locationName } = payload.location;
-      const { typeValue, typeName } = payload.type;
       var duplicateState = [...state.properties];
-      if (locationName == "location") {
-        if (locationValue !== "Any Location") {
-          duplicateState = data.filter(
-            ({ location }) => location == locationValue
-          );
+
+      const { locationValue, typeValue, priceValue, dateValue } = payload;
+      if (locationValue !== "Any Location") {
+        duplicateState = data.filter(
+          ({ location }) => location == locationValue
+        );
+      } else {
+        duplicateState = [...data];
+      }
+      if (dateValue !== "") {
+        duplicateState = duplicateState.filter(
+          ({ availability }) => availability >= dateValue
+        );
+      }
+      if (priceValue !== "Any Price") {
+        console.log(priceValue);
+        switch (priceValue) {
+          case "<500":
+            duplicateState = duplicateState.filter(({ price }) => price <= 500);
+            break;
+          case "500-1000":
+            duplicateState = duplicateState.filter(
+              ({ price }) => price >= 500 && price <= 1000
+            );
+            break;
+          case "1000-1500":
+            duplicateState = duplicateState.filter(
+              ({ price }) => price >= 1000 && price <= 1500
+            );
+            break;
+          case "1500-2000":
+            duplicateState = duplicateState.filter(
+              ({ price }) => price >= 1500 && price <= 2000
+            );
+            break;
+          case "2000-2500":
+            duplicateState = duplicateState.filter(
+              ({ price }) => price >= 2000 && price <= 2500
+            );
+            break;
+          case "2500":
+            duplicateState = duplicateState.filter(
+              ({ price }) => price >= 2500
+            );
+            break;
+          default:
+            break;
         }
       }
-      if (typeName == "type") {
-        console.log("type entered");
-        if (typeValue !== "Any Type") {
-          duplicateState = duplicateState.filter(
-            ({ type }) => type == typeValue
-          );
-        }
-        return {
-          ...state,
-          properties: duplicateState,
-        };
+      if (typeValue !== "Any Type") {
+        duplicateState = duplicateState.filter(({ type }) => type == typeValue);
       }
+      return {
+        ...state,
+        properties: duplicateState,
+      };
     },
   },
 });

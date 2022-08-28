@@ -10,7 +10,6 @@ function SearchBar() {
 
   useEffect(() => {
     dispatch(searchProperty(searchTerm));
-    console.log("in useEffect");
   }, [searchTerm]);
 
   const searchTermHandler = (e) => {
