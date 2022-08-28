@@ -9,6 +9,16 @@ a {
   text-align: center;
 }
 
+.active {
+  background-color: #7065ee3f;
+  color: #7065ee;
+}
+
+.main-logo {
+  width: 2rem;
+  margin-right: 0.2rem;
+}
+
 .navbar {
   display: flex;
   justify-content: space-around;
@@ -37,6 +47,12 @@ a {
   margin-left: 1rem;
   padding: 0.5rem;
   cursor: pointer;
+  border-radius: 5px;
+}
+
+.navbar-tabs > ul > li:hover {
+  background-color: #7065ee3f;
+  color: #7065ee;
 }
 
 .navbar-buttons > button {
