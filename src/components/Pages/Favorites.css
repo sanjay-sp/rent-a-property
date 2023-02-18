@@ -1,0 +1,25 @@
+.favorites-page {
+  margin: 2rem 15rem;
+}
+
+.favorites-header {
+  text-align: left;
+  padding-bottom: 1rem;
+  font-size: 2rem;
+  color: rgb(52, 52, 52);
+  border-bottom: 1px solid rgba(145, 144, 144, 0.308);
+}
+
+.favorites-listing {
+  display: grid;
+  grid-gap: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+.not-found {
+  align-items: center;
+  color: rgba(128, 128, 128, 0.7);
+  justify-content: center;
+  margin: auto;
+  padding-top: 3rem;
+}
